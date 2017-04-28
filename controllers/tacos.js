@@ -42,7 +42,7 @@ router.put('/:id', function(req, res) {
   db.taco.findById(req.params.id).then(function(taco) {
     if (taco) {
       taco.updateAttributes(req.body).then(function() {
-        res.send({msg: 'success'});
+        res.status(200).send({msg: 'success'});
       });
     } else {
       res.status(404).send({msg: 'error'});

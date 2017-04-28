@@ -48,6 +48,56 @@ describe('POST /tacos', function() {
 });
 
 // +-------------------------+
+// |      READ /tacos        |
+// +-------------------------+
+
+describe('GET /tacos/', function() {
+  it('should return a 200 when accessing /tacos/new', function(done) {
+    request(app).get('/tacos/new')
+    .end(function(err, response) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+
+  it('should load a taco on the edit page and return 200', function(done) {
+    request(app).get('/tacos/1/edit')
+    .end(function(err, response) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+
+  it('should load a taco and return 200', function(done) {
+    request(app).get('/tacos/1')
+    .end(function(err, response) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+});
+
+// +-------------------------+
+// |      PUT /tacos/:id     |
+// +-------------------------+
+
+describe('PUT /tacos/:id', function() {
+  it('should change name of taco', function(done) {
+    request(app).put('/tacos/1')
+    .type('form')
+    .send({
+      name:'Crazy Taco',
+      amount: 1
+    })
+    .end(function(err, response) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+});
+
+
+// +-------------------------+
 // |      DELETE /tacos      |
 // +-------------------------+
 
@@ -61,6 +111,17 @@ describe('DELETE /tacos/:id', function() {
       done(); // call done() so that it() knows we are finished.
     });
   });
+
+  it('should not be able to delete a non-existant taco', function(done) {
+    request(app).delete('/tacos/1')
+    .end(function(err, response) {
+      expect(response.statusCode).to.not.equal(200);
+      expect(response.body).to.have.property('msg');
+      expect(response.body.msg).to.equal('error');
+      done();
+    });
+  });
+
 });
 
 
