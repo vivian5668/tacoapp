@@ -15,7 +15,7 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.use('/tacos', require('./controllers/tacos'));
+app.use('/tacos', require('./controllers/tacos')); //put routes in a differnet file
 
 var server = app.listen(process.env.PORT || 3000);
 

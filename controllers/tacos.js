@@ -2,7 +2,7 @@ var express = require('express');
 var db = require('./../models');
 var router = express.Router();
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res) {  //now '/' is not home, it is /tacos/, index.js line18
   db.taco.findAll().then(function(tacos) {
     res.render('tacos/index', {tacos: tacos});
   }).catch(function(err) {
